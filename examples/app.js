@@ -9,7 +9,7 @@ import {
   verifyKeyMiddleware,
 } from 'discord-interactions';
 import { getRandomEmoji, DiscordRequest } from './utils.ts';
-import { getShuffledOptions, getResult } from './game.js';
+import { getShuffledOptions, getResult } from './game.ts';
 
 // Create an express app
 const app = express();

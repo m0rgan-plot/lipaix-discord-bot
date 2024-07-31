@@ -16,8 +16,8 @@ Below is a basic overview of the project structure:
 │   ├── selectMenu.js
 ├── .env.sample -> sample .env file
 ├── app.ts      -> main entrypoint for app
-├── commands.js -> slash command payloads + helpers
-├── game.js     -> logic specific to RPS
+├── commands.ts -> slash command payloads + helpers
+├── game.ts     -> logic specific to RPS
 ├── utils.ts    -> utility functions and enums
 ├── package.json
 ├── README.md
@@ -55,7 +55,7 @@ Fetching credentials is covered in detail in the [getting started guide](https:/
 
 ### Install slash commands
 
-The commands for the example app are set up in `commands.js`. All of the commands in the `ALL_COMMANDS` array at the bottom of `commands.js` will be installed when you run the `register` command configured in `package.json`:
+The commands for the example app are set up in `commands.ts`. All of the commands in the `ALL_COMMANDS` array at the bottom of `commands.ts` will be installed when you run the `register` command configured in `package.json`:
 
 ```
 npm run register

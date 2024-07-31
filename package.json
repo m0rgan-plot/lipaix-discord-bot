@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "ts-node app.ts",
-    "register": "node commands.js",
+    "register": "ts-node commands.ts",
+    "getCommands": "ts-node getCommands.ts",
     "dev": "nodemon app.ts"
   },
   "author": "Shay DeWael",

@@ -1,12 +1,11 @@
 import 'dotenv/config';
+import {Command} from "./commands";
 
-type Options = { method: string, body: string }
+type Options = { method: string, body?: string }
 
 export async function DiscordRequest(endpoint: string, options: Options) {
   // append endpoint to root API URL
   const url = 'https://discord.com/api/v10/' + endpoint;
-  // Stringify payloads
-  if (options.body) options.body = JSON.stringify(options.body);
   // Use fetch to make requests
   const res = await fetch(url, {
     headers: {
@@ -26,16 +25,33 @@ export async function DiscordRequest(endpoint: string, options: Options) {
   return res;
 }
 
-export async function InstallGlobalCommands(appId: string, commands: string) {
+export async function installGlobalCommands(appId: string, commands: Command[]) {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
 
   try {
     // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
-    await DiscordRequest(endpoint, { method: 'PUT', body: commands });
+    await DiscordRequest(endpoint, { method: 'PUT', body: JSON.stringify(commands) });
   } catch (err) {
     console.error(err);
   }
+
+  console.log(`Successfully registered commands: ${commands.map(c => c.name).join(', ')}`);
+}
+
+
+export async function getGlobalCommands(appId: string) {
+  // API endpoint to overwrite global commands
+  const endpoint = `applications/${appId}/commands`;
+
+  try {
+    const response = await DiscordRequest(endpoint, { method: 'GET' });
+    const json = await response.json()
+    console.log(`Registered commands: ${JSON.stringify(json, null, 2)}`);
+  } catch (err) {
+    console.error(err);
+  }
+
 }
 
 // Simple method that returns a random emoji from list
