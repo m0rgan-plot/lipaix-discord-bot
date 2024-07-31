@@ -5,7 +5,7 @@ import {
   InteractionResponseType,
   verifyKeyMiddleware,
 } from 'discord-interactions';
-import { getRandomEmoji } from './utils.js';
+import {getRandomEmoji} from "./utils";
 
 // Create an express app
 const app = express();
@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3000;
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
  */
-app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
+app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY!), async function (req, res) {
   // Interaction type and data
   const { type, data } = req.body;
 
@@ -41,7 +41,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: `hello world ${getRandomEmoji()}`,
+          content: `MEWIIIIII ${getRandomEmoji()}`,
+          flags: 64
+        },
+      });
+    } else if (name === 'selec') {
+      // Send a message into the channel where command was triggered from
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: 'Pouet',
+          flags: 64
         },
       });
     }

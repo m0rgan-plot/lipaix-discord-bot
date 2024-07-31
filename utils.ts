@@ -1,6 +1,8 @@
 import 'dotenv/config';
 
-export async function DiscordRequest(endpoint, options) {
+type Options = { method: string, body: string }
+
+export async function DiscordRequest(endpoint: string, options: Options) {
   // append endpoint to root API URL
   const url = 'https://discord.com/api/v10/' + endpoint;
   // Stringify payloads
@@ -24,7 +26,7 @@ export async function DiscordRequest(endpoint, options) {
   return res;
 }
 
-export async function InstallGlobalCommands(appId, commands) {
+export async function InstallGlobalCommands(appId: string, commands: string) {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
 
@@ -37,11 +39,11 @@ export async function InstallGlobalCommands(appId, commands) {
 }
 
 // Simple method that returns a random emoji from list
-export function getRandomEmoji() {
+export const getRandomEmoji = () => {
   const emojiList = ['😭','😄','😌','🤓','😎','😤','🤖','😶‍🌫️','🌏','📸','💿','👋','🌊','✨'];
   return emojiList[Math.floor(Math.random() * emojiList.length)];
 }
 
-export function capitalize(str) {
+export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
