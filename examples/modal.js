@@ -1,18 +1,20 @@
-import 'dotenv/config';
-import express from 'express';
+import 'dotenv/config'
 import {
-  InteractionType,
   InteractionResponseType,
+  InteractionType,
   MessageComponentTypes,
   verifyKeyMiddleware,
-} from 'discord-interactions';
+} from 'discord-interactions'
+import express from 'express'
 
 // Create and configure express app
-const app = express();
+const app = express()
 
+// eslint-disable-next-line consistent-return
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function (req, res) {
   // Interaction type and data
-  const { type, data } = req.body;
+  const { type, data } = req.body
+
   /**
    * Handle slash command requests
    */
@@ -53,7 +55,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function 
             },
           ],
         },
-      });
+      })
     }
   }
 
@@ -62,16 +64,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function 
    */
   if (type === InteractionType.MODAL_SUBMIT) {
     // custom_id of modal
-    const modalId = data.custom_id;
+    const modalId = data.custom_id
     // user ID of member who filled out modal
-    const userId = req.body.member.user.id;
+    const userId = req.body.member.user.id
 
     if (modalId === 'my_modal') {
-      let modalValues = '';
+      let modalValues = ''
+
       // Get value of text inputs
       for (let action of data.components) {
-        let inputComponent = action.components[0];
-        modalValues += `${inputComponent.custom_id}: ${inputComponent.value}\n`;
+        let inputComponent = action.components[0]
+        modalValues += `${inputComponent.custom_id}: ${inputComponent.value}\n`
       }
 
       return res.send({
@@ -79,11 +82,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function 
         data: {
           content: `<@${userId}> typed the following (in a modal):\n\n${modalValues}`,
         },
-      });
+      })
     }
   }
-});
+})
 
 app.listen(3000, () => {
-  console.log('Listening on port 3000');
-});
+  console.log('Listening on port 3000')
+})

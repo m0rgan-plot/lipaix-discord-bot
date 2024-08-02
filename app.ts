@@ -1,16 +1,13 @@
-import 'dotenv/config';
-import express from 'express';
-import {
-  InteractionType,
-  InteractionResponseType,
-  verifyKeyMiddleware,
-} from 'discord-interactions';
-import {getRandomEmoji} from "./utils";
+import 'dotenv/config'
+import { InteractionResponseType, InteractionType, verifyKeyMiddleware, } from 'discord-interactions'
+import express from 'express'
+
+import { getRandomEmoji } from './utils'
 
 // Create an express app
-const app = express();
+const app = express()
 // Get port, or default to 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
@@ -18,13 +15,13 @@ const PORT = process.env.PORT || 3000;
  */
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY!), async function (req, res) {
   // Interaction type and data
-  const { type, data } = req.body;
+  const { type, data } = req.body
 
   /**
    * Handle verification requests
    */
   if (type === InteractionType.PING) {
-    return res.send({ type: InteractionResponseType.PONG });
+    return res.send({ type: InteractionResponseType.PONG })
   }
 
   /**
@@ -32,7 +29,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY!), async fu
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
-    const { name } = data;
+    const { name } = data
 
     // "test" command
     if (name === 'test') {
@@ -44,7 +41,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY!), async fu
           content: `MEWIIIIII ${getRandomEmoji()}`,
           flags: 64
         },
-      });
+      })
     } else if (name === 'selec') {
       // Send a message into the channel where command was triggered from
       return res.send({
@@ -53,17 +50,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY!), async fu
           content: 'Pouet',
           flags: 64
         },
-      });
+      })
     }
 
-    console.error(`unknown command: ${name}`);
-    return res.status(400).json({ error: 'unknown command' });
+    console.error(`unknown command: ${name}`)
+    return res.status(400).json({ error: 'unknown command' })
   }
 
-  console.error('unknown interaction type', type);
-  return res.status(400).json({ error: 'unknown interaction type' });
-});
+  console.error('unknown interaction type', type)
+  return res.status(400).json({ error: 'unknown interaction type' })
+})
 
 app.listen(PORT, () => {
-  console.log('Listening on port', PORT);
-});
+  console.log('Listening on port', PORT)
+})

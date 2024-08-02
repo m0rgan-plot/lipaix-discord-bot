@@ -1,19 +1,21 @@
-import 'dotenv/config';
-import express from 'express';
+import 'dotenv/config'
 import {
-  InteractionType,
-  InteractionResponseType,
-  MessageComponentTypes,
   ButtonStyleTypes,
+  InteractionResponseType,
+  InteractionType,
+  MessageComponentTypes,
   verifyKeyMiddleware,
-} from 'discord-interactions';
+} from 'discord-interactions'
+import express from 'express'
 
 // Create and configure express app
-const app = express();
+const app = express()
 
+// eslint-disable-next-line consistent-return
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function (req, res) {
   // Interaction type and data
-  const { type, data } = req.body;
+  const { type, data } = req.body
+
   /**
    * Handle slash command requests
    */
@@ -41,7 +43,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function 
             },
           ],
         },
-      });
+      })
     }
   }
 
@@ -50,20 +52,20 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), function 
    */
   if (type === InteractionType.MESSAGE_COMPONENT) {
     // custom_id set in payload when sending message component
-    const componentId = data.custom_id;
+    const componentId = data.custom_id
     // user who clicked button
-    const userId = req.body.member.user.id;
+    const userId = req.body.member.user.id
 
     if (componentId === 'my_button') {
-      console.log(req.body);
+      console.log(req.body)
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: { content: `<@${userId}> clicked the button` },
-      });
+      })
     }
   }
-});
+})
 
 app.listen(3000, () => {
-  console.log('Listening on port 3000');
-});
+  console.log('Listening on port 3000')
+})

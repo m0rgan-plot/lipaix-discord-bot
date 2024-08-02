@@ -1,12 +1,12 @@
-import 'dotenv/config';
-import { installGlobalCommands } from './utils';
+import 'dotenv/config'
+import { installGlobalCommands } from './utils'
 
 export type Command = {
-    name: string;
-    description: string;
-    type: number;
-    integration_types: number[];
-    contexts: number[];
+  name: string;
+  description: string;
+  type: number;
+  integration_types: number[];
+  contexts: number[];
 }
 
 // Simple test command
@@ -16,7 +16,7 @@ const TEST_COMMAND: Command = {
   type: 1,
   integration_types: [0, 1],
   contexts: [0, 1, 2],
-};
+}
 
 // Simple selec command
 const SELEC_COMMAND: Command = {
@@ -25,8 +25,8 @@ const SELEC_COMMAND: Command = {
   type: 1,
   integration_types: [0, 1],
   contexts: [0, 1, 2],
-};
+}
 
-const ALL_COMMANDS: Command[] = [TEST_COMMAND, SELEC_COMMAND];
+const ALL_COMMANDS: Command[] = [TEST_COMMAND, SELEC_COMMAND]
 
-installGlobalCommands(process.env.APP_ID!, ALL_COMMANDS);
+installGlobalCommands(process.env.APP_ID!, ALL_COMMANDS)

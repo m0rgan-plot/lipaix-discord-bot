@@ -8,8 +8,9 @@ module.exports = {
     },
   },
   env: {
-    jest: true,
     browser: true,
+    jest: true,
+    node: true
   },
   globals: {
     jsdom: true,
